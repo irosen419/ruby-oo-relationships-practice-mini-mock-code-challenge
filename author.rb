@@ -13,16 +13,16 @@ class Author
         @@all
     end
 
-    def write_book(title, word_count)
-        Book.new(title, self, word_count)
+    def publish_book(title)
+        Publish.new(title, self)
     end
 
-    def books
-        Book.all.select {|book| book.author == self}
+    def my_books
+        Publish.all.select {|publication| publication.book if publication.author == self}
     end
 
     def total_words
-        books.map {|book| book.word_count}.sum
+        my_books.map {|publication| publication.book.word_count}.sum
     end
 
     def self.most_words
